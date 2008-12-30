@@ -1,0 +1,153 @@
+
+=pod
+
+=head1 NAME
+
+RatingStars - Rating stars controller
+
+=head1 SYNOPSIS
+
+  <html>
+  <head>
+  <script type="text/javascript" src="ratingstars.js"></script>
+  <script type="text/javascript">
+  <!--
+  var stars = RatingStars.create({
+    ratedStarImage:   'img/star_image.gif',  
+    unratedStarImage: 'img/empty_star_image.gif',  
+    maxRate:          5,
+    currentRate:      3
+  });
+  stars.registerCallback('onClick', function(rate){
+    // do some stuff 
+    // for example, AJAX action to save the selected rate.
+  });
+  //-->
+  </script>
+  </head>
+  <body onload="stars.setup('myrating');">
+  <h1>RatingStars</h1>
+  <div id="myrating"></div>
+  </body>
+  </html>
+
+=head1 DESCRIPTION
+
+This script helps you to generate a contents that shows a rate which a specific content has.
+Usually, in case such like this, people utilize star-image to represent how worth the content is.
+
+This class creates and displays a series of stars on a HTML element.
+If you set max rate 5, 5 stars are shown.
+And you can also set current rate. When you set current rate 3, 
+3 stars become highlightened and the rest of the stars are empty.
+
+This enables not only showing but also editting.
+When users point over the stars, the rate changes according to
+the cursor position. If they do click action after they change the rate,
+The callback function will be invoked. Callback should be set before.
+
+With this callback, you can get the number that means *current rate*.
+You can send the number to server-side and save it.
+Threre are many ways. I guess Ajax is popular now.
+
+=head1 CONSTRUCTOR
+
+  var stars = RatingStars.create({
+    param1: value1,
+    param2: value2
+  });
+
+=head2 ESSENTIAL PARAMETERS
+
+At first, you have to indicate two images' path. These are ratedStarImage and unratedStarImage.
+In almost of situations, star figure filled yellow is used as ratedStarImage, and the empty figure
+is used as unrated.
+
+=over 4
+
+=item ratedStarImage
+
+=item unratedStarImage
+
+=back
+
+=head2 OPTIONAL PARAMETERS
+
+Following parameters can be set if you want.
+
+=over 4
+
+=item halfRatedStarImage
+
+If you set halfRatedStarImage like above parameters, It behaves like
+0.5 is the base unit. For example, when you set current rate 3.75,
+It shows 3 filled stars and 1 half filled star, and makes the rest empty.
+
+=item userRatedStarImage
+
+Furthermore, you can use another image to disinguish the rated
+image for default and the image user set.
+
+=item freezeOnClick
+
+By default, true is set. It'll be flozen when user click on the stars.
+If this is set as false, user can re-choose rate time and again.
+
+=item maxRate
+
+5 is set by default.
+
+=item currentRate
+
+0 is set by defaul.
+
+=back
+
+=head1 EVENT HANDLING
+
+  stars.registerCallback(eventName, callback);
+
+For example
+
+  stars.registerCallback('onClick', function(rate) {
+    alert(rate);
+  } );
+
+=over 4
+
+=item onClick
+
+=item onChange
+
+=item onDefault
+
+=back
+
+=head1 PLUGINS
+
+  stars.loadPlugin('PluginName');
+
+=head2 MessageLabel
+
+  <div id="messageElement"></div>
+
+  stars.loadPlugin('MessageLabel');
+  stars.setMessageElement('messageElement');
+  stars.setDefaultMessage('Choose rate, please.');
+  stars.setSuccessfulMessage('Thanks!');
+  stars.setRatedMessage(1, 'awful');
+  stars.setRatedMessage(2, 'poor');
+  stars.setRatedMessage(3, 'good');
+  stars.setRatedMessage(4, 'great!');
+  stars.setRatedMessage(5, 'awesome!');
+
+=head1 AUTHOR
+
+Lyo Kato, C<lyo.kato@gmail.com>
+
+=head1 LICENSE
+
+MIT License
+
+=cut
+

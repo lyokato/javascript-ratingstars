@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>RatingStars</title>
+<link rel="stylesheet" type="text/css" href="podstyle.css" /><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/javascript">
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  </script></head>
+<body>
+<div class="path">
+RatingStars
+</div>
+<div>
+<a href="src/ratingstars.pod">Source</a>
+</div>
+
+
+<div class="pod">
+<!-- INDEX START -->
+<h3 id="TOP">Index</h3>
+<ul>
+	<li><a href="#NAME">NAME</a></li>
+	<li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+	<li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+	<li><a href="#CONSTRUCTOR">CONSTRUCTOR</a><br />
+<ul>
+	<li><a href="#ESSENTIAL_PARAMETERS">ESSENTIAL PARAMETERS</a></li>
+	<li><a href="#OPTIONAL_PARAMETERS">OPTIONAL PARAMETERS</a></li>
+</ul>
+</li>
+	<li><a href="#EVENT_HANDLING">EVENT HANDLING</a></li>
+	<li><a href="#PLUGINS">PLUGINS</a><br />
+<ul>
+	<li><a href="#MessageLabel">MessageLabel</a></li>
+</ul>
+</li>
+	<li><a href="#AUTHOR">AUTHOR</a></li>
+	<li><a href="#LICENSE">LICENSE</a></li>
+</ul>
+<hr />
+<!-- INDEX END -->
+
+<h1 id="NAME">NAME <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>RatingStars - Rating stars controller</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<pre>  &lt;html&gt;
+  &lt;head&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;ratingstars.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+  &lt;!--
+  var stars = RatingStars.create({
+    ratedStarImage:   'img/star_image.gif',  
+    unratedStarImage: 'img/empty_star_image.gif',  
+    maxRate:          5,
+    currentRate:      3
+  });
+  stars.registerCallback('onClick', function(rate){
+    // do some stuff 
+    // for example, AJAX action to save the selected rate.
+  });
+  //--&gt;
+  &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body onload=&quot;stars.setup('myrating');&quot;&gt;
+  &lt;h1&gt;RatingStars&lt;/h1&gt;
+  &lt;div id=&quot;myrating&quot;&gt;&lt;/div&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+
+</pre><h1 id="DESCRIPTION">DESCRIPTION <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>This script helps you to generate a contents that shows a rate which a specific content has.
+Usually, in case such like this, people utilize star-image to represent how worth the content is.</p>
+
+<p>This class creates and displays a series of stars on a HTML element.
+If you set max rate 5, 5 stars are shown.
+And you can also set current rate. When you set current rate 3, 
+3 stars become highlightened and the rest of the stars are empty.</p>
+
+<p>This enables not only showing but also editting.
+When users point over the stars, the rate changes according to
+the cursor position. If they do click action after they change the rate,
+The callback function will be invoked. Callback should be set before.</p>
+
+<p>With this callback, you can get the number that means *current rate*.
+You can send the number to server-side and save it.
+Threre are many ways. I guess Ajax is popular now.</p>
+
+<h1 id="CONSTRUCTOR">CONSTRUCTOR <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<pre>  var stars = RatingStars.create({
+    param1: value1,
+    param2: value2
+  });
+
+</pre><h2 id="ESSENTIAL_PARAMETERS">ESSENTIAL PARAMETERS</h2>
+
+<p>At first, you have to indicate two images' path. These are ratedStarImage and unratedStarImage.
+In almost of situations, star figure filled yellow is used as ratedStarImage, and the empty figure
+is used as unrated.</p>
+
+<dl>
+	<dt>ratedStarImage</dt>
+	<dt>unratedStarImage</dt>
+</dl>
+<h2 id="OPTIONAL_PARAMETERS">OPTIONAL PARAMETERS</h2>
+
+<p>Following parameters can be set if you want.</p>
+
+<dl>
+	<dt>halfRatedStarImage</dt>
+		<dd><p>If you set halfRatedStarImage like above parameters, It behaves like
+0.5 is the base unit. For example, when you set current rate 3.75,
+It shows 3 filled stars and 1 half filled star, and makes the rest empty.</p></dd>
+	<dt>userRatedStarImage</dt>
+		<dd><p>Furthermore, you can use another image to disinguish the rated
+image for default and the image user set.</p></dd>
+	<dt>freezeOnClick</dt>
+		<dd><p>By default, true is set. It'll be flozen when user click on the stars.
+If this is set as false, user can re-choose rate time and again.</p></dd>
+	<dt>maxRate</dt>
+		<dd><p>5 is set by default.</p></dd>
+	<dt>currentRate</dt>
+		<dd><p>0 is set by defaul.</p></dd>
+</dl>
+<h1 id="EVENT_HANDLING">EVENT HANDLING <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<pre>  stars.registerCallback(eventName, callback);
+
+</pre><p>For example</p>
+
+<pre>  stars.registerCallback('onClick', function(rate) {
+    alert(rate);
+  } );
+
+</pre><dl>
+	<dt>onClick</dt>
+	<dt>onChange</dt>
+	<dt>onDefault</dt>
+</dl>
+<h1 id="PLUGINS">PLUGINS <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<pre>  stars.loadPlugin('PluginName');
+
+</pre><h2 id="MessageLabel">MessageLabel</h2>
+
+<pre>  &lt;div id=&quot;messageElement&quot;&gt;&lt;/div&gt;
+
+  stars.loadPlugin('MessageLabel');
+  stars.setMessageElement('messageElement');
+  stars.setDefaultMessage('Choose rate, please.');
+  stars.setSuccessfulMessage('Thanks!');
+  stars.setRateMessage(1, 'awful');
+  stars.setRateMessage(2, 'poor');
+  stars.setRateMessage(3, 'good');
+  stars.setRateMessage(4, 'great!');
+  stars.setRateMessage(5, 'awesome!');
+
+</pre><h1 id="AUTHOR">AUTHOR <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>Lyo Kato, <code>lyo.kato@gmail.com</code></p>
+
+<h1 id="LICENSE">LICENSE <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>MIT License</p>
+
+
+</div><div class="footer">generated by <a href="http://search.cpan.org/perldoc?Pod%3A%3AProjectDocs">Pod::ProjectDocs</a></div></body>
+</html>

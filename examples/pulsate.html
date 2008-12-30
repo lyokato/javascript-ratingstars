@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>RatingStars Example</title>
+<script type="text/javascript" src="../lib/ratingstars.js"></script>
+<script type="text/javascript" src="js/prototype.js"></script>
+<script type="text/javascript" src="js/effects.js"></script>
+<script type="text/javascript">
+<!--
+var rt = RatingStars.create({
+  ratedStarImage:     'images/sun1.gif',
+  unratedStarImage:   'images/sun2.gif',
+  maxRate:            5,
+  currentRate:        3.75
+});
+rt.registerCallback('onClick', function(selectedRate) {
+  new Effect.Pulsate('stars');
+  document.getElementById('currentRate').innerHTML = selectedRate.toString();
+} );
+//-->
+</script>
+</head>
+<body onload="rt.setup('stars')">
+<h1>RatingStars Example</h1>
+<div id="stars"></div>
+<hr />
+<div id="currentRate"></div>
+</body>
+</html>
+
